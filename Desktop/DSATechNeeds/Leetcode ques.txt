@@ -1,0 +1,58 @@
+﻿Contest-373
+Matrix Similarity After Right Shifts (easy)
+Not able to do it 
+Solution:
+Input: mat = [[1,2,1,2],[5,5,5,5],[6,3,6,3]], k = 2
+Output: true
+Explanation:
+  
+
+
+
+Initially, the matrix looks like the first figure. 
+Second figure represents the state of the matrix after one right and left cyclic shifts to even and odd indexed rows.
+Third figure is the final state of the matrix after two cyclic shifts which is similar to the initial matrix.
+Therefore, return true.
+Answer:
+class Solution {
+    public boolean areSimilar(int[][] mat, int k) {
+        for (int[] l : mat) {
+            int n = l.length;
+            for (int i = 0; i < n; ++i) {
+                if (l[i] != l[(i + k) % n]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+
+
+
+
+
+Count beautiful substrings i (medium)
+Not able to solve
+Solution
+
+
+class Solution {
+    public int beautifulSubstrings(String s, int k) {
+ 
+        for(int i=0;i<s.length();i++){
+     if("aeiou".contains(s.charAt(i))){
+         v++;
+     }
+     else
+     {
+         c++;
+     }
+       
+            for(int j=i;j<s.length();j++){
+      String substr=s.charAt(i);
+            }
+        }
+    }
+}
