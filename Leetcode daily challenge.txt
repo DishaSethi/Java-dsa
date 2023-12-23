@@ -1,0 +1,104 @@
+﻿Maximum score after splitting the string:
+
+
+My solution:
+class Solution {
+    public int maxScore(String s) {
+        int max=0;
+String  right="";
+String left="";
+
+
+
+
+        for(int i=0;i<s.length();i++){
+left=s.substring(i,i+1);
+right=s.substring(i+1,s.length());
+int count=0;
+ int count0=0;
+     int count1=0;
+     int z=0;
+for(int j=0;j<s.length();j++){
+    //count for left
+//    int l=0;
+//    int r=0;
+
+
+    if(j<left.length()){
+if(left.charAt(j)=='0'){
+    count0++;
+   
+}
+    }
+    //count for righht
+   
+   if(j>=left.length() ){
+     
+        if(right.charAt(z)=='1'){
+count1++;
+
+
+
+
+}z++;
+    }
+   
+}
+ count=count0+count1;
+    if(count>max){
+        max=count;
+    }
+        }
+        return max;
+    }
+}
+
+
+
+
+Path crossing:
+Best Solution:
+
+
+class Solution {
+    public boolean isPathCrossing(String path) {
+        Map<Character,Pair<Integer,Integer>> moves= new HashMap();
+
+
+        moves.put('N',new Pair(0,1));
+        moves.put('S',new Pair(0,-1));
+         moves.put('W',new Pair(-1,0));
+          moves.put('E',new Pair(1,0));
+
+
+          Set<Pair<Integer,Integer>> visited=new HashSet();
+
+
+          visited.add(new Pair(0,0));
+          int x=0;
+          int y=0;
+
+
+          for(Character c:path.toCharArray()){
+              Pair<Integer,Integer> curr=moves.get(c);
+
+
+              int dx=curr.getKey();
+              int dy=curr.getValue();
+
+
+              x+=dx;
+              y+=dy;
+
+
+              Pair<Integer,Integer> pair=new Pair(x,y);
+if(visited.contains(pair)){
+    return true;
+}
+visited.add(pair);
+
+
+          }
+          return false;
+    }
+}
