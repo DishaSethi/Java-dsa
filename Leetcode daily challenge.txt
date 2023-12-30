@@ -290,3 +290,74 @@ class Solution {
         return dp[0];
     }
 }
+
+
+December 30
+Redistribute characters to make all strings equal(easy)
+My soln:
+class Solution {
+    public boolean makeEqual(String[] words) {
+        if(words.length==1){
+            return true;
+        }
+        HashMap<Character,Integer> freq=new HashMap<>();
+        for(int i=0;i<words.length;i++){
+            for(int j=0;j<words[i].length();j++){
+                if(freq.containsKey(words[i].charAt(j))){
+                   int count=freq.get(words[i].charAt(j));
+                    freq.put(words[i].charAt(j),count+1);
+                }
+                else{
+                    freq.put(words[i].charAt(j),1);
+                }
+            }
+        }
+
+
+boolean ans=false;
+Set<Character> keys=freq.keySet();
+
+
+        for(Character key:keys){
+int val=freq.get(key);
+if(val%words.length!=0 ){
+    ans=false;
+    break;
+}else{
+    ans=true;
+}
+        }
+        return ans;
+    }
+}
+
+
+Other Soln:
+class Solution {
+    public boolean makeEqual(String[] words) {
+      if (words.length == 1) {
+            return true;
+        }
+        int totalCharCount = 0;
+        for (String s : words) {
+            totalCharCount += s.length();
+        }
+        if (totalCharCount % words.length != 0) {
+            return false;
+        }
+
+
+        int[] myMap = new int[26];
+        for (String s : words) {
+            for (char c : s.toCharArray()) {
+                myMap[c - 'a']++;
+            }
+        }
+        for (int i : myMap) {
+            if (i % words.length != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
