@@ -452,3 +452,39 @@ for(int i=0;i<s.length();i++){
 return ans;
     }
 }
+
+
+January 1
+Assign Cookies(easy)
+Time complexity:O(nlogn)
+Space complexity: O(1)
+Soln:
+class Solution {
+   
+    public int findContentChildren(int[] g, int[] s) {
+    int cookieNums=s.length;
+    if(cookieNums==0) return 0;
+
+
+    Arrays.sort(g);
+    Arrays.sort(s);
+
+
+    int cookieIndex=s.length-1;
+    int childIndex=g.length-1;
+int maxNum=0;
+while(cookieIndex>=0 && childIndex>=0){
+    if(s[cookieIndex]>=g[childIndex]){
+        maxNum++;
+        cookieIndex--;
+        childIndex--;
+    }
+    else{
+        childIndex--;
+    }
+}
+return maxNum;
+
+
+    }
+}
