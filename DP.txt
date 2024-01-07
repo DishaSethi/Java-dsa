@@ -1,0 +1,218 @@
+﻿Unbounded knapsack
+1. Rod cutting Problem
+Recursive approach:
+import java.util.*;
+import java.io.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args)throws IOException
+{
+  Scanner sc=new Scanner(System.in);
+  System.out.println("enter length of the rod");
+  int l=sc.nextInt();
+  int len[]=new int[l];
+  System.out.println("enter values of len ");
+  for(int i=0;i<l;i++){
+    len[i]=sc.nextInt();
+  }
+
+
+  int price[]=new int[l];
+  System.out.println("enter values of price ");
+  for(int i=0;i<l;i++){
+    price[i]=sc.nextInt();
+  }
+
+
+   
+
+
+
+
+
+
+
+
+  int maxprof=maxProfit(l,len,price,0);
+  System.out.println("The max profit is "+maxprof);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public static int maxProfit(int l,int[] len, int[] price, int i){
+  if(l==0){
+
+
+    return 0;
+  }
+  if(i==len.length){
+    return 0;
+  }
+  if(len[i]<=l){
+    return Math.max(price[i]+maxProfit(l-len[i], len, price, i), maxProfit(l,len,price,i+1));
+  }else{
+    return maxProfit(l, len, price, i+1);
+  }
+}
+
+
+}
+
+
+Memoisation:
+import java.util.*;
+import java.io.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args)throws IOException
+{
+  Scanner sc=new Scanner(System.in);
+  System.out.println("enter length of the rod");
+  int l=sc.nextInt();
+  int len[]=new int[l];
+  System.out.println("enter values of len ");
+  for(int i=0;i<l;i++){
+    len[i]=sc.nextInt();
+  }
+
+
+  int price[]=new int[l];
+  System.out.println("enter values of price ");
+  for(int i=0;i<l;i++){
+    price[i]=sc.nextInt();
+  }
+
+
+   
+  int [][]dp=new int[len.length+1][l+1];
+
+
+for(int i=0;i<len.length+1;i++){
+  for(int j=0;j<l+1;j++){
+   
+      dp[i][j]=-1;
+   
+  }
+}
+
+
+
+
+
+
+
+
+  int maxprof=maxProfit(l,len,price,l,dp);
+  System.out.println("The max profit is "+maxprof);
+}
+
+
+
+
+
+
+public static int maxProfit(int l, int[]len , int[]price , int i,int [][]dp){
+
+
+      if(i==0 || l==0){
+     return 0;
+      }
+      if(dp[i][l]!=-1){
+       return dp[i][l];
+      }
+      if(len[i-1]<=l){
+        return dp[i][l]=Math.max(price[i-1]+maxProfit(l-len[i-1],len,price,i,dp),maxProfit(l,len,price,i-1,dp));
+      }else
+        return dp[i][l]=maxProfit(l,len,price,i-1,dp);
+     
+
+
+
+
+   
+ 
+
+
+}
+
+
+
+
+}
+
+
+Dp:
+import java.util.*;
+import java.io.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args)throws IOException
+{
+  Scanner sc=new Scanner(System.in);
+  System.out.println("enter length of the rod");
+  int l=sc.nextInt();
+  int len[]=new int[l];
+  System.out.println("enter values of len ");
+  for(int i=0;i<l;i++){
+    len[i]=sc.nextInt();
+  }
+
+
+  int price[]=new int[l];
+  System.out.println("enter values of price ");
+  for(int i=0;i<l;i++){
+    price[i]=sc.nextInt();
+  }
+
+
+   
+  int [][]dp=new int[len.length+1][l+1];
+
+
+for(int i=0;i<len.length+1;i++){
+  for(int j=0;j<l+1;j++){
+    if(i==0 || j==0){
+      dp[i][j]=0;
+    }
+  }
+}
+
+
+
+
+for(int p=1;p<len.length+1;p++){
+  for(int q=1;q<l+1;q++){
+  if(len[p-1]<=q){
+    dp[p][q]=Math.max(price[p-1]+dp[p][q-len[p-1]],dp[p-1][q]);
+  }else{
+    dp[p][q]=dp[p-1][q];
+  }
+
+
+   
+  }
+}
+
+
+
+
+  System.out.println("The max profit is "+dp[len.length][l]);
+}
+
+
+
+
+
+
+}
