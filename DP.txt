@@ -216,3 +216,633 @@ for(int p=1;p<len.length+1;p++){
 
 
 }
+
+
+
+
+2. Coin Change problem 1
+Recursion:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args) throws IOException
+  {
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter length of the coin array");
+    int l=sc.nextInt();
+    int coin[]=new int[l];
+    System.out.println("enter the values of coin array");
+    for(int i=0;i<l;i++){
+coin[i]=sc.nextInt();
+    }
+    System.out.println("enter sum:");
+int sum=sc.nextInt();
+
+
+
+
+
+
+
+
+
+
+
+
+    int maxways=maxWays(coin,sum, 0);
+    System.out.println("the max ways are"+maxways);
+  }
+
+
+
+
+// recursive code
+public static int maxWays(int coin[], int sum, int i){
+  if(i==coin.length){
+    return 0;
+  }
+  if(sum==0){
+    return 1;
+  }
+  if(coin[i]<=sum){
+    return maxWays(coin, sum-coin[i], i)+maxWays(coin, sum, i+1);
+  }else{
+    return maxWays(coin, sum, i+1);
+  }
+}
+}
+
+
+
+
+Memoization:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args) throws IOException
+  {
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter length of the coin array");
+    int l=sc.nextInt();
+    int coin[]=new int[l];
+    System.out.println("enter the values of coin array");
+    for(int i=0;i<l;i++){
+coin[i]=sc.nextInt();
+    }
+    System.out.println("enter sum:");
+int sum=sc.nextInt();
+int dp[][]=new int[l+1][sum+1];
+for(int i=0;i<l+1;i++){
+  for(int j=0;j<sum+1;j++){
+    dp[i][j]=-1;
+  }
+}
+    int maxways=maxWays(coin,sum, l,dp);
+    System.out.println("the max ways are"+maxways);
+  }
+  // MEMOIZATION
+  public static int maxWays(int []coin,int sum, int l,int dp[][]){
+
+
+    if(l==0 && sum==0){
+      return 1;
+    }
+    if(sum==0 && l!=0){
+      return 1;
+    }
+    if(sum!=0 && l==0){
+      return 0;
+    }
+    if(dp[l][sum]!=-1){
+      return dp[l][sum];
+    }
+    if(sum==0){
+      return 1;
+    }
+
+
+    if(coin[l-1]<=sum){
+      return  dp[l][sum]=maxWays(coin, sum-coin[l-1], l,dp)+maxWays(coin, sum, l-1,dp);
+    }else{
+      return dp[l][sum]= maxWays(coin, sum, l-1,dp);
+    }
+
+
+
+
+  }
+
+
+
+
+}
+
+
+DP:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class ro{
+  public static void main(String[]args) throws IOException
+  {
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter length of the coin array");
+    int l=sc.nextInt();
+    int coin[]=new int[l];
+    System.out.println("enter the values of coin array");
+    for(int i=0;i<l;i++){
+coin[i]=sc.nextInt();
+    }
+    System.out.println("enter sum:");
+int sum=sc.nextInt();
+int dp[][]=new int[l+1][sum+1];
+for(int i=0;i<l+1;i++){
+  for(int j=0;j<sum+1;j++){
+    if(i==0 && j==0){
+      dp[i][j]=1;
+    }
+    if(j==0 && i!=0){
+      dp[i][j]=1;
+    }
+     if(j!=0 && i==0){
+      dp[i][j]=0;
+    }
+
+
+   
+  }
+}
+
+
+for(int i=1;i<l+1;i++){
+  for(int j=1;j<sum+1;j++){
+    if(coin[i-1]<=j){
+dp[i][j]=dp[i][j-coin[i-1]]+dp[i-1][j];
+    }
+    else{
+      dp[i][j]=dp[i-1][j];
+    }
+  }
+}
+
+
+ 
+    System.out.println("the max ways are"+dp[l][sum]);
+  }
+  
+
+
+
+
+}
+
+
+
+
+Coin change Problem -2 
+Recursion:
+Memoization:
+DP:
+Longest common Subsequence
+Recursion:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class rotar{
+   
+    public static void main(String[]args) throws IOException
+    {
+         
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter first word");
+        String x=sc.nextLine();
+        System.out.println("enter second word");
+        String y=sc.nextLine();
+       int lcs=longestCommonSubsequence(x,y,0,0);
+        System.out.println("The longest common subsequence has count "+lcs);
+    }
+    public static int longestCommonSubsequence(String x,String y,int i,int j){
+        if(i==x.length()){
+            return 0;
+        }
+        if(j==y.length()){
+            return 0;
+        }
+        if(x.charAt(i)==y.charAt(j)){
+            return 1+longestCommonSubsequence(x, y, i+1, j+1);
+        }
+        else{
+            return Math.max( longestCommonSubsequence(x, y, i, j+1),longestCommonSubsequence(x, y, i+1, j));
+        }
+    }
+}
+
+
+Memoization:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class rotar{
+   
+    public static void main(String[]args) throws IOException
+    {
+       
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter first word");
+        String x=sc.nextLine();
+        System.out.println("enter second word");
+        String y=sc.nextLine();
+        int dp[][]=new int[x.length()+1][y.length()+1];
+        for(int i=0;i<=x.length();i++){
+           for(int j=0;j<=y.length();j++){
+               dp[i][j]=-1;
+           }
+        }
+       int lcs=longestCommonSubsequence(x,y,0,0,dp);
+        System.out.println("The longest common subsequence has count "+lcs);
+    }
+    public static int longestCommonSubsequence(String x,String y, int i ,int j, int[][] dp){
+        if(i==x.length()){
+            return dp[i][j]= 0;
+        }
+        if(j==y.length()){
+            return dp[i][j]=0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        if(x.charAt(i)==y.charAt(j)){
+            return dp[i][j]=1+longestCommonSubsequence(x, y, i+1, j+1, dp);
+        }
+        else{
+            return dp[i][j]=Math.max(longestCommonSubsequence(x, y, i, j+1, dp),longestCommonSubsequence(x, y, i+1, j, dp));
+        }
+
+
+    }
+ 
+    }
+
+
+
+
+DP:
+
+
+Longest Common Substring
+Recursion:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class Main{
+    public static void main(String[] args) throws IOException{
+
+
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter first word");
+        String x=sc.nextLine();
+        System.out.println("enter second word");
+
+
+        String y=sc.nextLine();
+
+
+        int count=longestCommonSubstring(x,y,0,0,0);
+        System.out.println("the count is "+count);
+
+
+    }
+         
+
+
+    // Recursion
+    public static int longestCommonSubstring(String x,String y, int i,int j,int count){
+        if(i==x.length() || j==y.length()){
+            return count ;
+        }
+        if(x.charAt(i)==y.charAt(j)){
+        return longestCommonSubstring(x, y, i+1, j+1,count+1);
+         
+        }else{
+         
+return Math.max(count,Math.max(longestCommonSubstring(x, y, i+1, j,0),
+           longestCommonSubstring(x, y, i, j+1,0)));
+           
+        }
+   
+    }}
+
+
+
+
+Memoization using hashmap :
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class Main{
+    public static void main(String[] args) throws IOException{
+
+
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter first word");
+        String x=sc.nextLine();
+        System.out.println("enter second word");
+
+
+        String y=sc.nextLine();
+     
+        HashMap<String,Integer> hm=new HashMap<>();
+      
+        int count=longestCommonSubstring(x,y,0,0,0,hm);
+
+
+//          
+        System.out.println("the count is "+count);
+
+
+    }
+    // Memoization using hashmap
+    public static int longestCommonSubstring(String x,String y,int i , int j,int count, HashMap<String,Integer> hm){
+
+
+   
+            if(i==x.length()|| j==y.length()){
+                return 0;
+            }
+            
+            String key=i+"code"+j+"bix"+count;
+
+
+            if(hm.containsKey(key)) return hm.get(key);
+
+
+            if(x.charAt(i)==y.charAt(j)){
+                return longestCommonSubstring(x, y, i+1 ,j+1, count+1, hm);
+            }
+            else{
+             
+             
+               int res= Math.max(count, Math.max(longestCommonSubstring(x, y, i+1, j, 0, hm),longestCommonSubstring(x, y, i, j+1, 0, hm)));
+               hm.put(key,res);
+               return res;
+            }
+       
+    }   
+    }
+
+
+
+
+DP:
+import java.io.*;
+import java.util.*;
+import java.math.*;
+class Main{
+    public static void main(String[] args) throws IOException{
+
+
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter first word");
+        String x=sc.nextLine();
+        System.out.println("enter second word");
+
+
+        String y=sc.nextLine();
+     
+        // HashMap<String,Integer> hm=new HashMap<>();
+          int dp[][]=new int[x.length()+1][y.length()+1];
+        for(int i=0;i<x.length()+1;i++)
+        for(int j=0;j<y.length()+1;j++){
+            if(i==0|| j==0){
+            dp[i][j]=0;}
+        }
+        // int count=longestCommonSubstring(x,y,0,0,0,hm);
+        for(int i=1;i<=x.length();i++){
+            for(int j=1;j<=y.length();j++){
+                if(x.charAt(i-1)==y.charAt(j-1)){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }else{
+                    dp[i][j]=0;
+                }
+            }
+        }
+        int count=0;
+for(int i=0;i<x.length()+1;i++){
+    for(int j=0;j<y.length()+1;j++){
+count=Math.max(count,dp[i][j]);
+    }
+}
+        System.out.println("the count is "+count);
+
+
+    }
+    
+    }
+
+
+
+
+
+
+Printing the shortest supersequence
+Recursion:
+import java.io.*;
+import java.util.*;
+
+
+class ro{
+  public static void main(String []args) throws IOException{
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter s:");
+    String s=sc.nextLine();
+    System.out.println("enter t:");
+
+
+    String t=sc.nextLine();
+    // String a="";
+    String dp[][]=new String [s.length()+1][t.length()+1];
+    for(int i=0;i<s.length()+1;i++){
+            for(int j=0;j<t.length()+1;j++){
+              dp[i][j]="";
+            }}
+
+
+ String ans=scs(s,t,0,0);
+System.out.println("the ans is"+" "+ans);
+  }
+
+
+
+
+  // Recursion
+public static String scs(String a ,String b,int i,int j){
+ 
+if(i==a.length()){
+  String ans="";
+  while(j<b.length()){
+    ans+=b.charAt(j);
+    j++;
+  }
+return ans;}
+
+
+  if(j==b.length()){
+    String ans="";
+    while(i<a.length()){
+      ans+=a.charAt(i);
+      i++;
+    }
+    return ans;
+}
+
+
+if(a.charAt(i)== b.charAt(j)){
+  return a.charAt(i)+scs(a,b,i+1,j+1);
+}
+String l1= a.charAt(i)+scs(a,b,i+1,j);
+String l2=b.charAt(j)+scs(a,b,i,j+1);
+return min(l1,l2);
+}
+public static String min(String a,String b){
+  if(a.length()>b.length()){
+    return b;
+  }else return a;
+}
+}
+
+
+Memoization:
+import java.io.*;
+import java.util.*;
+
+
+class ro{
+  public static void main(String []args) throws IOException{
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter s:");
+    String s=sc.nextLine();
+    System.out.println("enter t:");
+
+
+    String t=sc.nextLine();
+    // String a="";
+    String dp[][]=new String [s.length()+1][t.length()+1];
+    for(int i=0;i<s.length()+1;i++){
+            for(int j=0;j<t.length()+1;j++){
+              dp[i][j]="";
+            }}
+
+
+
+
+ String ans=scs(s,t,s.length(),t.length(),dp);
+System.out.println("the ans is"+" "+ans);
+  }
+  // Memoization
+public static String scs (String a, String  b,int i,int j,String[][] dp){
+
+
+  if(i==0){
+  return b.substring(0,j);
+  }
+
+
+
+
+if(j==0){
+ 
+
+
+  return a.substring(0,i);
+}
+
+
+if(dp[i][j]!=""){
+
+
+  return dp[i][j];
+}
+
+
+if(a.charAt(i-1)==b.charAt(j-1)){
+  return dp[i][j]=scs(a, b, i-1, j-1, dp)+a.charAt(i-1);
+}
+String l1=scs(a,b,i-1,j,dp)+a.charAt(i-1);
+String l2=scs(a,b,i,j-1,dp)+b.charAt(j-1);
+
+
+return dp[i][j]+=min(l1,l2);
+}
+ 
+
+
+public static String min(String a,String b){
+  if(a.length()>b.length()){
+    return b;
+  }else return a;
+}
+}
+
+
+DP:
+import java.io.*;
+import java.util.*;
+
+
+class ro{
+  public static void main(String []args) throws IOException{
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter s:");
+    String s=sc.nextLine();
+    System.out.println("enter t:");
+
+
+    String t=sc.nextLine();
+    // String a="";
+    String dp[][]=new String [s.length()+1][t.length()+1];
+    for(int i=0;i<s.length()+1;i++){
+      for(int j=0;j<t.length()+1;j++){
+   dp[i][j]="";
+   if(i==0){
+    dp[i][j]+=t.substring(0,j);
+
+
+   }
+   if(j==0){
+    dp[i][j]+=s.substring(0,i);
+   }
+   
+}
+    }
+for(int i=1;i<dp.length;i++)
+{
+  for(int j=1;j<t.length()+1;j++){
+
+
+    if(s.charAt(i-1)==t.charAt(j-1)){
+      dp[i][j]=dp[i-1][j-1]+s.charAt(i-1);
+    }else{
+    String l1=dp[i-1][j]+s.charAt(i-1);
+    String l2=dp[i][j-1]+t.charAt(j-1);
+    dp[i][j]=min(l1,l2);}
+  }
+}
+  
+// }
+System.out.println("the ans is"+" "+dp[s.length()][t.length()]);
+  }
+ 
+
+
+
+
+
+
+public static String min(String a,String b){
+  if(a.length()>b.length()){
+    return b;
+  }else return a;
+}
+}
